@@ -17,5 +17,8 @@ RUN pip install /tmp/*.whl \
                 OctoPrint==1.3.12 \
  && rm -fr /root/.cache/pip/
 
+VOLUME [ "/root/.octoprint" ]
+EXPOSE 5000
+
 ENTRYPOINT [ "/usr/local/bin/octoprint" ]
 CMD [ "serve", "--iknowwhatimdoing" ]
