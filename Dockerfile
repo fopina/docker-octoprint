@@ -4,7 +4,7 @@ RUN apt update \
  && apt install -y gcc \
  && rm -rf /var/lib/apt/lists/*
 
-RUN pip wheel regex==2020.1.8 \
+RUN pip wheel regex==2020.4.4 \
               psutil==5.6.7 \
               netifaces==0.10.9 \
  && rm -fr /root/.cache/pip/
@@ -14,7 +14,7 @@ FROM python:2.7-slim
 COPY --from=builder /*.whl /tmp/
 
 RUN pip install /tmp/*.whl \
-                OctoPrint==1.3.12 \
+                OctoPrint==1.4.0 \
  && rm -fr /root/.cache/pip/
 
 VOLUME [ "/root/.octoprint" ]
