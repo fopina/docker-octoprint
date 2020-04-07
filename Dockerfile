@@ -17,6 +17,9 @@ RUN pip install /tmp/*.whl \
                 OctoPrint==1.4.0 \
  && rm -fr /root/.cache/pip/
 
+COPY pip.conf /etc/pip.conf
+ENV PYTHONPATH="/root/.octoprint/plugin_persist/lib/python2.7/site-packages/:${PYTHONPATH}"
+
 VOLUME [ "/root/.octoprint" ]
 EXPOSE 5000
 
