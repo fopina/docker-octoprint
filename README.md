@@ -11,5 +11,5 @@ docker image for Octoprint
 ```
 docker run -p 5000:5000 \
            -v delme:/root/.octoprint \
-           fopina/openvpn:latest
+           fopina/octoprint:latest
 ```
