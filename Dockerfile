@@ -14,7 +14,7 @@ FROM python:3.7-slim
 COPY --from=builder /*.whl /tmp/
 
 RUN pip install /tmp/*.whl \
-                OctoPrint==1.4.0 \
+                'OctoPrint==1.4.2' \
  && rm -fr /root/.cache/pip/
 
 COPY pip.conf /etc/pip.conf
