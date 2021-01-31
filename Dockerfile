@@ -23,5 +23,8 @@ ENV PYTHONPATH="/root/.octoprint/plugin_persist/lib/python2.7/site-packages/:${P
 VOLUME [ "/root/.octoprint" ]
 EXPOSE 5000
 
-ENTRYPOINT [ "/usr/local/bin/octoprint" ]
+ADD entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT [ "/entrypoint.sh" ]
+
 CMD [ "serve", "--iknowwhatimdoing" ]
