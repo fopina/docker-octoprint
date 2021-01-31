@@ -4,9 +4,9 @@ RUN apt update \
  && apt install -y gcc \
  && rm -rf /var/lib/apt/lists/*
 
-RUN pip wheel regex==2020.7.14 \
-              psutil==5.6.7 \
-              netifaces==0.10.9 \
+RUN pip wheel netifaces==0.10.9 \
+              psutil==5.8.0 \
+              regex==2020.11.13 \
  && rm -fr /root/.cache/pip/
 
 FROM python:3.7-slim
@@ -14,7 +14,7 @@ FROM python:3.7-slim
 COPY --from=builder /*.whl /tmp/
 
 RUN pip install /tmp/*.whl \
-                'OctoPrint==1.4.2' \
+                'OctoPrint==1.5.3' \
  && rm -fr /root/.cache/pip/
 
 COPY pip.conf /etc/pip.conf
