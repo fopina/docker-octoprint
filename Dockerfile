@@ -1,6 +1,7 @@
+# alpine needs to build to many wheels, use slim (or set up pip cache in github builders)
 FROM python:3.7-slim as builder
 
-ARG VERSION=1.6.1
+ARG VERSION=1.7.0
 
 RUN apt update \
  && apt install -y gcc \
@@ -13,7 +14,12 @@ RUN --mount=type=cache,target=/wheels \
 
 FROM python:3.7-slim
 
-ARG VERSION=1.6.1
+ARG VERSION=1.7.0
+
+# curl for scripts
+RUN apt update \
+ && apt install -y curl \
+ && rm -rf /var/lib/apt/lists/*
 
 # crazy noop to force buildkit to build previous stage
 COPY --from=builder /etc/passwd /etc/passwd
