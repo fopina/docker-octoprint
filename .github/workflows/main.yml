@@ -1,8 +1,8 @@
 name: publish to dockerhub
 
 on:
-    push:
-      branches:
+  push:
+    branches:
       - master
 
 jobs:
@@ -10,7 +10,7 @@ jobs:
     name: publish to dockerhub
     runs-on: ubuntu-latest
     env:
-      OCTO_VERSION: 1.7.0
+      OCTO_VERSION: 1.7.3
       IMAGE_VERSION: 1
     steps:
       - uses: actions/checkout@master
