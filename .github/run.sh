@@ -11,11 +11,11 @@ if [ -z "git diff" ]; then
 fi
 
 echo "Updates detected"
-env
+
 git config user.email updater@devnull.localhost
 git config user.name Updater
 
-git checkout -b dependency-update/octoprint-x
+git checkout -b dependency-update/octoprint-y
 
 git commit -a -m "Auto-updated dependencies"
 
