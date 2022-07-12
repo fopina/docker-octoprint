@@ -29,7 +29,7 @@ def main():
 
     # check if branch already exists
     subprocess.check_call(['git', 'fetch'])
-    branches = subprocess.check_output(['git', 'branch', '-a']))
+    branches = subprocess.check_output(['git', 'branch', '-a'])
     if f'{branch}\n' in branches:
         print('Branch already exists, skipping')
         exit(0)
