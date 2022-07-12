@@ -26,7 +26,7 @@ def main():
     subprocess.check_call('git config user.email updater@devnull.localhost', shell=True)
     subprocess.check_call('git config user.name Updater', shell=True)
 
-    branch = f'dependency-update/x1octoprint-{new_version}'
+    branch = f'dependency-update/x2octoprint-{new_version}'
 
     # check if branch already exists
     subprocess.check_call(['git', 'fetch'])
