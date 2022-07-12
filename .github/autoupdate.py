@@ -26,6 +26,9 @@ def main():
     subprocess.check_call('git config user.name Updater', shell=True)
 
     branch = f'dependency-update/x1octoprint-{new_version}'
+
+    print(subprocess.check_output(['git', 'branch', '-l']))
+
     title = f'bump OctoPrint to {new_version}'
     subprocess.check_call(['git', 'checkout', '-b', branch])
     subprocess.check_call(['git', 'commit', '-a', '-m', title])
