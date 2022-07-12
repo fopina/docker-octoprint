@@ -6,6 +6,9 @@ on:
   #  - cron: "*/5 * * * *"
   workflow_dispatch:
     inputs:
+  push:
+    branches:
+      - autoupdate
 
 jobs:
   autoupdate:
