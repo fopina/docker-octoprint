@@ -27,7 +27,7 @@ def main():
 
     branch = f'dependency-update/x1octoprint-{new_version}'
 
-    print(subprocess.check_output(['git', 'branch', '-l']))
+    print(subprocess.check_output(['git', 'branch', '-a']))
 
     title = f'bump OctoPrint to {new_version}'
     subprocess.check_call(['git', 'checkout', '-b', branch])
