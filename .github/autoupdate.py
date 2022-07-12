@@ -41,7 +41,7 @@ def main():
     subprocess.check_call(['git', 'push', 'origin', branch])
 
     r = requests.post(
-        f"https://api.github.com/repos/${REPO}/pulls",
+        f"https://api.github.com/repos/{REPO}/pulls",
         headers={
             "Authorization": f'token {token}',
         },
