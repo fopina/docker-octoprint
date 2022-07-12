@@ -19,13 +19,4 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.9
-      - run: pip install pip-upgrader
-      - run: pip-upgrade --skip-package-installation -p octoprint
-      - run: git diff
-      - name: push data
-        run: |
-          cd data
-          git config user.email updater@devnull.localhost
-          git config user.name Updater
-          git commit log.bin -m update
-          git push
+      - run: .github/run.sh
