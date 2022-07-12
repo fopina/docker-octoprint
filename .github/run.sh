@@ -11,7 +11,7 @@ if [ -z "git diff" ]; then
 fi
 
 echo "Updates detected"
-
+env
 git config user.email updater@devnull.localhost
 git config user.name Updater
 
