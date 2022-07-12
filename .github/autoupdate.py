@@ -2,6 +2,7 @@
 
 import sys
 import subprocess
+from tkinter.tix import Tree
 import requests
 
 REPO = 'fopina/docker-octoprint'
@@ -29,7 +30,7 @@ def main():
 
     # check if branch already exists
     subprocess.check_call(['git', 'fetch'])
-    branches = subprocess.check_output(['git', 'branch', '-a'])
+    branches = subprocess.check_output(['git', 'branch', '-a'], text=Tree)
     if f'{branch}\n' in branches:
         print('Branch already exists, skipping')
         exit(0)
