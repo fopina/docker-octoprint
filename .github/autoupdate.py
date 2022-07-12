@@ -27,8 +27,12 @@ def main():
 
     branch = f'dependency-update/x1octoprint-{new_version}'
 
+    # check if branch already exists
     subprocess.check_call(['git', 'fetch'])
-    print(subprocess.check_output(['git', 'branch', '-a']))
+    branches = subprocess.check_output(['git', 'branch', '-a']))
+    if f'{branch}\n' in branches:
+        print('Branch already exists, skipping')
+        exit(0)
 
     title = f'bump OctoPrint to {new_version}'
     subprocess.check_call(['git', 'checkout', '-b', branch])
