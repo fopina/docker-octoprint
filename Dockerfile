@@ -1,20 +1,18 @@
 # alpine needs to build to many wheels, use slim (or set up pip cache in github builders)
 FROM python:3.7-slim as builder
 
-ARG VERSION=1.7.0
-
 RUN apt update \
  && apt install -y gcc \
  && rm -rf /var/lib/apt/lists/*
 
+ADD requirements.txt /
 # need to build the wheels first because of qemu
 RUN --mount=type=cache,target=/wheels \
-    pip wheel "OctoPrint==${VERSION}" --wheel-dir=/wheels \
+    cp /requirements.txt /wheels \
+ && pip wheel -r /requirements.txt --wheel-dir=/wheels \
  && rm -fr /root/.cache/pip/
 
 FROM python:3.7-slim
-
-ARG VERSION=1.7.0
 
 # curl for scripts
 RUN apt update \
@@ -25,7 +23,7 @@ RUN apt update \
 COPY --from=builder /etc/passwd /etc/passwd
 
 RUN --mount=type=cache,target=/wheels \
-    pip install --find-links=/wheels "OctoPrint==${VERSION}" \
+    pip install --find-links=/wheels -r /wheels/requirements.txt \
  && rm -fr /root/.cache/pip/
 
 COPY pip.conf /etc/pip.conf
