@@ -20,9 +20,7 @@ jobs:
         with:
           python-version: 3.9
       - run: pip install -r requirements.txt
-      - name: get coefficient
-        run: |
-          python main.py ${{ secrets.WALLET }} ${{ secrets.AVAX_URL }} --binary-log -o data/log.bin
+      - run: pip install --upgrade
       - name: push data
         run: |
           cd data
