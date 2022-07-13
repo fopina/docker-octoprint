@@ -8,7 +8,6 @@ jobs:
     name: test docker image
     runs-on: ubuntu-latest
     env:
-      OCTO_VERSION: 1.7.3
       IMAGE_VERSION: 1
     steps:
       - uses: actions/checkout@v3
@@ -24,8 +23,6 @@ jobs:
         with:
           tags: fopina/octoprint:test
           load: true
-          build-args: |
-            VERSION=${OCTO_VERSION}
 
       - name: test docker image
         run: .github/test.sh fopina/octoprint:test
@@ -34,11 +31,8 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           tags: fopina/octoprint:test
-          outputs: |
-            x
+          push: false
           platforms: |
             linux/amd64
-            inux/arm64
+            linux/arm64
             linux/arm/v7
-          build-args: |
-            VERSION=${OCTO_VERSION}
