@@ -37,7 +37,7 @@ def main():
 
     title = f'bump OctoPrint to {new_version}'
     subprocess.check_call(['git', 'checkout', '-b', branch])
-    subprocess.check_call(['git', 'commit', '-a', '-m', title])
+    subprocess.check_call(['git', 'commit', '--signoff', '-a', '-m', title])
     subprocess.check_call(['git', 'push', 'origin', branch])
 
     r = requests.post(
