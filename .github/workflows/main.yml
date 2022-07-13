@@ -14,6 +14,11 @@ jobs:
       IMAGE_VERSION: 1
     steps:
       - uses: actions/checkout@v3
+      - name: get version
+        id: version
+        run: |
+            VERSION=$(cat requirements.txt | cut -d '=' -f3)
+            echo ::set-output name=version::${VERSION}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -25,12 +30,24 @@ jobs:
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
       - name: build (and publish) main image
-        run: |
-          docker buildx build \
-            --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --build-arg VERSION=${OCTO_VERSION} \
-            --push \
-            -t fopina/octoprint:${OCTO_VERSION} \
-            -t fopina/octoprint:${OCTO_VERSION}.${IMAGE_VERSION} \
-            -t fopina/octoprint:latest \
-            .
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: |
+            fopina/octoprint:test
+            fopina/octoprint:${{ steps.version.outputs.version }}
+            fopina/octoprint:${{ steps.version.outputs.version }}.${IMAGE_VERSION}
+            fopina/octoprint:latest
+          platforms: |
+            linux/amd64
+            linux/arm64
+            linux/arm/v7
+          labels: |
+            org.opencontainers.image.title=OctoPrint
+            org.opencontainers.image.url=https://github.com/fopina/docker-octoprint/
+            org.opencontainers.image.documentation=https://github.com/fopina/docker-octoprint/
+            org.opencontainers.image.source=https://github.com/fopina/docker-octoprint/
+            org.opencontainers.image.authors=https://github.com/fopina/
+            org.opencontainers.image.version=${{ steps.version.outputs.version }}
+            org.opencontainers.image.revision Source control revision identifier for the packaged software.
+            org.opencontainers.image.vendor=fopina

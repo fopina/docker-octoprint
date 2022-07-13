@@ -17,4 +17,4 @@ jobs:
           python-version: 3.9
       - run: pip install pip-upgrader requests
       - name: autoupdate.py
-        run: python -u .github/autoupdate.py "${{ secrets.GITHUB_TOKEN }}"
+        run: python -u .github/autoupdate.py "${{ secrets.PAT }}"
