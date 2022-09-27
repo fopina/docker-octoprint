@@ -1,5 +1,20 @@
-# alpine needs to build to many wheels, use slim (or set up pip cache in github builders)
-FROM python:3.7-slim as builder
+ARG BASE=python:3.9-slim
+
+##### BASE
+
+FROM ${BASE} as base-armv7
+ADD pip.armv7.conf /etc/pip.conf
+
+FROM ${BASE} as base-amd64
+
+FROM base-armv7 as base-arm64
+
+# ==== CLEAN BASE ====
+FROM base-${TARGETARCH}${TARGETVARIANT} as base
+
+##### MAIN
+
+FROM base as builder
 
 RUN apt update \
  && apt install -y gcc \
@@ -12,7 +27,7 @@ RUN --mount=type=cache,target=/wheels \
  && pip wheel -r /requirements.txt --wheel-dir=/wheels \
  && rm -fr /root/.cache/pip/
 
-FROM python:3.7-slim
+FROM base
 
 # curl for scripts
 RUN apt update \
@@ -26,9 +41,9 @@ RUN --mount=type=cache,target=/wheels \
     pip install --find-links=/wheels -r /wheels/requirements.txt \
  && rm -fr /root/.cache/pip/
 
-COPY pip.conf /etc/pip.conf
-
 ENV PYTHONPATH="/root/.octoprint/plugin_persist/lib/python2.7/site-packages/:${PYTHONPATH}"
+
+ADD pip.conf /etc/pip.conf
 
 VOLUME [ "/root/.octoprint" ]
 EXPOSE 5000
