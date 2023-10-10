@@ -1,1 +1,1 @@
-OctoPrint==1.9.2
+OctoPrint==1.9.3
