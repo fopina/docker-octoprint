@@ -1,13 +1,10 @@
-ARG BASE=python:3.9-slim
+ARG BASE=python:3.11-slim
 
 ##### BASE
 
-FROM ${BASE} as base-armv7
-ADD pip.armv7.conf /etc/pip.conf
-
 FROM ${BASE} as base-amd64
 
-FROM base-amd64 as base-arm64
+FROM ${BASE} as base-arm64
 
 # ==== CLEAN BASE ====
 FROM base-${TARGETARCH}${TARGETVARIANT} as base
