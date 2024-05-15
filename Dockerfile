@@ -7,7 +7,7 @@ ADD pip.armv7.conf /etc/pip.conf
 
 FROM ${BASE} as base-amd64
 
-FROM base-armv7 as base-arm64
+FROM base-amd64 as base-arm64
 
 # ==== CLEAN BASE ====
 FROM base-${TARGETARCH}${TARGETVARIANT} as base
@@ -41,6 +41,7 @@ RUN --mount=type=cache,target=/wheels \
     pip install --find-links=/wheels -r /wheels/requirements.txt \
  && rm -fr /root/.cache/pip/
 
+# "python2.7" is meaningless in this path, it's the "external persisted" path for plugins
 ENV PYTHONPATH="/root/.octoprint/plugin_persist/lib/python2.7/site-packages/:${PYTHONPATH}"
 
 ADD pip.conf /etc/pip.conf
