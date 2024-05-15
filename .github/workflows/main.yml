@@ -9,9 +9,6 @@ jobs:
   build:
     name: publish to dockerhub
     runs-on: ubuntu-latest
-    env:
-      OCTO_VERSION: 1.7.3
-      IMAGE_VERSION: 1
     steps:
       - uses: actions/checkout@v3
       - name: get version

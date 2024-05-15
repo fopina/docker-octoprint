@@ -7,8 +7,6 @@ jobs:
   build:
     name: test docker image
     runs-on: ubuntu-latest
-    env:
-      IMAGE_VERSION: 1
     steps:
       - uses: actions/checkout@v3
 
