@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build:
     name: publish to dockerhub
@@ -26,6 +30,9 @@ jobs:
       - name: login to dockerhub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
+      - name: login to ghcr
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
       - name: build (and publish) main image
         uses: docker/build-push-action@v3
         with:
@@ -35,6 +42,28 @@ jobs:
             fopina/octoprint:${{ steps.version.outputs.version }}
             fopina/octoprint:${{ steps.version.outputs.version }}-${{ steps.version.outputs.sha }}
             fopina/octoprint:latest
+          platforms: |
+            linux/amd64
+            linux/arm64
+          labels: |
+            org.opencontainers.image.title=OctoPrint
+            org.opencontainers.image.url=https://github.com/fopina/docker-octoprint/
+            org.opencontainers.image.documentation=https://github.com/fopina/docker-octoprint/
+            org.opencontainers.image.source=https://github.com/fopina/docker-octoprint/
+            org.opencontainers.image.authors=https://github.com/fopina/
+            org.opencontainers.image.version=${{ steps.version.outputs.version }}-${{ steps.version.outputs.sha }}
+            org.opencontainers.image.revision Source control revision identifier for the packaged software.
+            org.opencontainers.image.vendor=fopina
+
+      - name: build and publish to ghcr
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: |
+            ghcr.io/fopina/octoprint:test
+            ghcr.io/fopina/octoprint:${{ steps.version.outputs.version }}
+            ghcr.io/fopina/octoprint:${{ steps.version.outputs.version }}-${{ steps.version.outputs.sha }}
+            ghcr.io/fopina/octoprint:latest
           platforms: |
             linux/amd64
             linux/arm64
