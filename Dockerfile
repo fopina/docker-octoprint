@@ -1,4 +1,4 @@
-ARG BASE=python:3.11-slim
+ARG BASE=python:3.13-slim
 
 ##### BASE
 
