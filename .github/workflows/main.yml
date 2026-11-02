@@ -35,17 +35,17 @@ jobs:
 
       - name: build (and publish) main image
         uses: docker/build-push-action@v3
-        with: &publish_options
-          push: true
+        with:
+          push: &publish_push true
           tags: |
             fopina/octoprint:test
             fopina/octoprint:${{ steps.version.outputs.version }}
             fopina/octoprint:${{ steps.version.outputs.version }}-${{ steps.version.outputs.sha }}
             fopina/octoprint:latest
-          platforms: |
+          platforms: &publish_platforms |
             linux/amd64
             linux/arm64
-          labels: |
+          labels: &publish_labels |
             org.opencontainers.image.title=OctoPrint
             org.opencontainers.image.url=https://github.com/fopina/docker-octoprint/
             org.opencontainers.image.documentation=https://github.com/fopina/docker-octoprint/
@@ -58,7 +58,9 @@ jobs:
       - name: build and publish to ghcr
         uses: docker/build-push-action@v3
         with:
-          <<: *publish_options
+          push: *publish_push
+          platforms: *publish_platforms
+          labels: *publish_labels
           tags: |
             ghcr.io/fopina/octoprint:test
             ghcr.io/fopina/octoprint:${{ steps.version.outputs.version }}
