@@ -13,7 +13,7 @@ def main():
         exit(2)
     
     token = sys.argv[1]
-    subprocess.check_call('pip-upgrade --skip-package-installation -p octoprint', shell=True)
+    subprocess.check_call(['pip-upgrade', '-p', 'octoprint'])
     diff = subprocess.check_output('git diff', shell=True)
     if not diff:
         print('No updates were found')
