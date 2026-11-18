@@ -1,1 +1,1 @@
-OctoPrint==2.0.0
+OctoPrint==2.0.1
